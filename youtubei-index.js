@@ -1,3 +1,5 @@
+//Replace  Node_modules/discord-player-youtubei/dist/index.js
+
 "use strict";
 var __create = Object.create;
 var __defProp = Object.defineProperty;
