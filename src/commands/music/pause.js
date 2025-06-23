@@ -3,29 +3,33 @@ const { EmbedBuilder } = require("discord.js");
 module.exports = {
   name: "pause",
   description: "pauses the current song",
-  deleted: true,
+  deleted: false,
 
   callback: async (client, interaction) => {
-    const queue = client.player.getQueue(interaction.guild);
+    const queue = client.player.nodes.create(interaction.guild, {
+      metadata: {
+        channel: interaction.channel
+      }
+    });
 
     if (!queue) {
       await interaction.reply("There is no song playing");
       return;
     }
 
-    const currentSong = queue.current;
-
-    queue.setPaused(true);
+    queue.node.setPaused(true);
 
     const embed = new EmbedBuilder()
       .setTitle(" ")
-      .setColor("random")
-      .setThumbnail(currentSong.Thumbnail)
+      .setColor("Random")
+      .setImage(queue.currentTrack.thumbnail)
       .addFields({
         name: ` `,
-        value: `Paused **${currentSong.title}**`
+        value: `Paused **${queue.currentTrack}**`
       });
 
     interaction.reply({ embeds: [embed] });
+
+    //interaction.reply("Pause the song");
   }
 };

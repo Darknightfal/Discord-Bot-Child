@@ -18,13 +18,12 @@ module.exports = {
       });
     }
 
-    const success = queue.node.skip();
+    queue.node.skip();
 
     try {
       const embed = new EmbedBuilder()
         .setColor("Random")
-        .setTitle(`Skipped [${queue.currentTrack}] "Unknown"} ✅`)
-        .setImage(queue.thumbnail);
+        .setTitle(`Skipped [${queue.currentTrack}] ✅`);
       interaction.reply({ embeds: [embed] });
     } catch (error) {
       console.log(error);
