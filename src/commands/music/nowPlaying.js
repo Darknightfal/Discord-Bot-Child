@@ -1,8 +1,8 @@
 const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
-  name: "pause",
-  description: "pauses the current song",
+  name: "now-playing",
+  description: "the current song playing",
   deleted: false,
 
   callback: async (client, interaction) => {
