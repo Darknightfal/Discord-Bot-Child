@@ -50,9 +50,18 @@ module.exports = {
           }
         }
       );
+
+      const queueSize = client.player.nodes.get(interaction.guild, {
+        metadata: {
+          channel: interaction.channel
+        }
+      });
+
       embed.setTitle(`Added [${track.title}] to the queue!`);
       embed.setImage(track.thumbnail);
-      embed.setFooter({ text: `duration ${track.duration}` });
+      embed.setFooter({
+        text: `duration ${track.duration} | <${queueSize.tracks.size}> song(s)! ✅`
+      });
 
       await interaction.reply({ embeds: [embed] });
     } catch (error) {

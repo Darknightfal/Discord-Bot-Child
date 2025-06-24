@@ -30,7 +30,7 @@ module.exports = {
         .setColor("Random")
         .addFields({
           name: "",
-          value: `Queue shuffled <${queue.tracks.size}> song(s)! <✅`
+          value: `Queue shuffled <${queue.tracks.size}> song(s)! ✅`
         });
 
       interaction.reply({ embeds: [embed] });
