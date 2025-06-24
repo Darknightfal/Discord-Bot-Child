@@ -3,35 +3,35 @@ const { EmbedBuilder } = require("discord.js");
 module.exports = {
   name: "queue",
   description: "Shows the first 10 songs in the queue",
-  deleted: true,
+  deleted: false,
 
   callback: async (client, interaction) => {
-    const queue = await client.player.nodes.create(interaction.guild, {
-      metadata: {
-        channel: interaction.channel
-      }
-    });
+    const queue = client.player.nodes.get(interaction.guildId);
 
-    if (!queue || !queue.playing) {
-      await interaction.deferReply({ ephemeral: true });
-      await interaction.editReply("There is no song playing");
+    if (!queue || !queue.isPlaying()) {
+      await interaction.reply({
+        content: "❌ There is no song playing.",
+        ephemeral: true
+      });
       return;
     }
 
+    const currentSong = queue.currentTrack;
+    const songDuration = queue.currentTrack.duration;
+
     const queueString = queue.tracks
+      .toArray()
       .slice(0, 10)
-      .map((song, i) => {
-        return `${i + 1}) [${song.duration}]\` ${song.title} - <@${
-          song.requestedBy.id
-        }>`;
-      })
-      .join("\n");
+      .join(`\nSong Duration: ${songDuration}\n\n`);
 
     const embed = new EmbedBuilder()
-      .addFields(
-        `**Currently Playing**\n ${currentSong.title} - <@${currentSong.requestedBy.id}>\n\n**Queue:**\n${queueString}`
+      .setTitle("🎶 Current Queue")
+      .setDescription(
+        `**Now Playing:**\n[${currentSong.title}]\n\n` +
+          `**Up Next:**\n${queueString || "No songs in queue."}`
       )
-      .setThumbnail(currentSong.thumbnail);
+      .setThumbnail(currentSong.thumbnail)
+      .setColor("Random");
 
     interaction.reply({ embeds: [embed] });
   }

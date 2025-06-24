@@ -33,7 +33,13 @@ client.player.events.on("error", (queue, error) => {
 });
 
 client.player.events.on("playerError", (queue, error) => {
-  console.error("Player error:", error);
+  console.error("Streaming error:", error.message);
+  if (error.message.startsWith("SKIP_TRACK")) {
+    queue.node.skip();
+    queue.metadata.channel.send(
+      "⏭️ Skipped: No compatible audio format found."
+    );
+  }
 });
 
 client.player.on("error", (queue, error) => {
