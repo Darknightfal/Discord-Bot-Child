@@ -28,6 +28,14 @@ client.player.extractors.register(YoutubeiExtractor, {
   }
 });
 
+client.player.events.on("error", (queue, error) => {
+  console.error("Error event:", error);
+});
+
+client.player.events.on("playerError", (queue, error) => {
+  console.error("Player error:", error);
+});
+
 client.player.on("error", (queue, error) => {
   console.error(
     `🎵 Player error on ${queue.metadata.guild?.name || "unknown"}:`,

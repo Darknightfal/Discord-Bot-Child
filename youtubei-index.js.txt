@@ -1,3 +1,5 @@
+//replace code in node_modules/discord-player-youtubei/dist/index.js with this code
+
 "use strict";
 var __create = Object.create;
 var __defProp = Object.defineProperty;
@@ -123,7 +125,7 @@ function createReadableFromWeb(readStream, highWaterMark = 1024 * 512) {
 // lib/common/generateYTStream.ts
 var DEFAULT_DOWNLOAD_OPTIONS = {
   quality: "best",
-  format: "mp4",
+  format: "any",
   type: "audio"
 };
 function createWebReadableStream(url, size, innertube, videoInfo) {
@@ -180,6 +182,7 @@ function createWebReadableStream(url, size, innertube, videoInfo) {
                 }
                 fetchUrl = fmtVideo.url;
               } catch (error) {
+
                 console.log(`\x1B[31mFallback failed with audio-only: ${error.message}\x1B[39m`)
                 return true;
               }
@@ -217,7 +220,7 @@ function createWebReadableStream(url, size, innertube, videoInfo) {
           }
           return reject(
             new Error(`Downloading \u300C${videoInfo.basic_info.title}\u300D failed.`)
-          );
+          );/**/
         });
       },
       async cancel() {

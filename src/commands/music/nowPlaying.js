@@ -24,7 +24,7 @@ module.exports = {
       .setFooter({ text: `duration ${queue.currentTrack.duration}` })
       .addFields({
         name: ` `,
-        value: `Paused **${queue.currentTrack}**`
+        value: `**${queue.currentTrack}**`
       });
 
     interaction.reply({ embeds: [embed] });
