@@ -21,6 +21,7 @@ module.exports = {
       .setTitle(" ")
       .setColor("Random")
       .setImage(queue.currentTrack.thumbnail)
+      .setFooter({ text: `duration ${track.duration}` })
       .addFields({
         name: ` `,
         value: `Paused **${queue.currentTrack}**`
