@@ -17,12 +17,8 @@ module.exports = {
     }
 
     const currentSong = queue.currentTrack;
-    const songDuration = queue.currentTrack.duration;
 
-    const queueString = queue.tracks
-      .toArray()
-      .slice(0, 10)
-      .join(`\nSong Duration: ${songDuration}\n\n`);
+    const queueString = queue.tracks.toArray().slice(0, 10).join(`\n\n`);
 
     const embed = new EmbedBuilder()
       .setTitle("🎶 Current Queue")
