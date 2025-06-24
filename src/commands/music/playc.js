@@ -29,7 +29,7 @@ module.exports = {
       embed.setAuthor({
         name: `No results found... try again ? <❌>`
       });
-      return interaction.editReply({ embeds: [embed] });
+      return interaction.reply({ embeds: [embed] });
     }
 
     try {
