@@ -49,6 +49,32 @@ module.exports = (client) => {
     }
   });
 
+  //queue skip
+
+  Player.on("error", (queue, error) => {
+    console.error(
+      `🎵 Player error on ${queue.metadata.guild?.name || "unknown"}:`,
+      error.message
+    );
+
+    // Try to skip to next song
+    if (queue && queue.playing) {
+      queue.skip().catch((err) => {
+        console.error("❌ Failed to skip track:", err.message);
+        queue.destroy();
+      });
+    } else {
+      queue.destroy(); // clean up if nothing left
+    }
+
+    // Optional: send message to a channel
+    if (queue.metadata && queue.metadata.send) {
+      queue.metadata.send(
+        "❌ Error playing the current track. Skipping to next..."
+      );
+    }
+  });
+
   //message created logging
 
   client.on("messageCreate", async (message) => {
