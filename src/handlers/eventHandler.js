@@ -3,7 +3,6 @@ const getAllFiles = require("../utils/getAllFiles");
 const fs = require("fs");
 const { EmbedBuilder, ActivityType } = require("discord.js");
 require("dotenv").config();
-const { Player } = require("discord-player");
 
 module.exports = (client) => {
   const eventFolders = getAllFiles(path.join(__dirname, "..", "events"), true);
@@ -46,32 +45,6 @@ module.exports = (client) => {
       if (message.content.toLowerCase() === "pewpew") {
         message.channel.send("@everyone");
       }
-    }
-  });
-
-  //queue skip
-
-  Player.on("error", (queue, error) => {
-    console.error(
-      `🎵 Player error on ${queue.metadata.guild?.name || "unknown"}:`,
-      error.message
-    );
-
-    // Try to skip to next song
-    if (queue && queue.playing) {
-      queue.skip().catch((err) => {
-        console.error("❌ Failed to skip track:", err.message);
-        queue.destroy();
-      });
-    } else {
-      queue.destroy(); // clean up if nothing left
-    }
-
-    // Optional: send message to a channel
-    if (queue.metadata && queue.metadata.send) {
-      queue.metadata.send(
-        "❌ Error playing the current track. Skipping to next..."
-      );
     }
   });
 
