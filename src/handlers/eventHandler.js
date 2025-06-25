@@ -23,7 +23,7 @@ module.exports = (client) => {
   // Activity and DND mode
 
   client.on("ready", async () => {
-    client.user.setStatus("dnd");
+    client.user.setStatus("invisible");
     client.user.setActivity({
       name: "Distortlight Is my father",
       type: ActivityType.Custom
