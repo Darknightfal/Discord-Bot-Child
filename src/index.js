@@ -1,7 +1,7 @@
 // Bot start line (nodemon src/index.js)
 
 require("dotenv").config();
-const { Client, IntentsBitField } = require("discord.js");
+const { Client, IntentsBitField, EmbedBuilder } = require("discord.js");
 const mongoose = require("mongoose");
 const eventHandler = require("./handlers/eventHandler");
 const { Player } = require("discord-player");
@@ -28,42 +28,19 @@ client.player.extractors.register(YoutubeiExtractor, {
   }
 });
 
-client.player.events.on("error", (queue, error) => {
-  console.error("Error event:", error);
-});
-
-client.player.events.on("playerError", (queue, error) => {
-  console.error("Streaming error:", error.message);
-  if (error.message.startsWith("SKIP_TRACK")) {
+client.player.events.on("playerStart", (queue, track) => {
+  try {
+    const embedPlaying = new EmbedBuilder()
+      .setTitle(`Started playing **${track.cleanTitle}**!`)
+      .setImage(track.thumbnail)
+      .setFooter({
+        text: `duration ${track.duration} | <${queue.tracks.size}> song(s) left! ✅`
+      });
+    queue.metadata.channel.send({ embeds: [embedPlaying] });
+  } catch (error) {
+    console.log(error);
     queue.node.skip();
-    queue.metadata.channel.send(
-      "⏭️ Skipped: No compatible audio format found."
-    );
-  }
-});
-
-client.player.on("error", (queue, error) => {
-  console.error(
-    `🎵 Player error on ${queue.metadata.guild?.name || "unknown"}:`,
-    error.message
-  );
-
-  // Try to skip to next song
-
-  if (queue && queue.playing) {
-    queue.skip().catch((err) => {
-      console.error("❌ Failed to skip track:", err.message);
-      queue.destroy();
-    });
-  } else {
-    queue.destroy(); // clean up if nothing left
-  }
-
-  // Optional: send message to a channel
-  if (queue.metadata && queue.metadata.send) {
-    queue.metadata.send(
-      "❌ Error playing the current track. Skipping to next..."
-    );
+    return;
   }
 });
 
