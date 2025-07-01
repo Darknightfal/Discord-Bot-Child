@@ -23,7 +23,7 @@ module.exports = (client) => {
   // Activity and DND mode
 
   client.on("ready", async () => {
-    client.user.setStatus("invisible");
+    client.user.setStatus("dnd");
     client.user.setActivity({
       name: "Distortlight Is my father",
       type: ActivityType.Custom
@@ -58,24 +58,16 @@ module.exports = (client) => {
     // Image & message pinning to a channel
 
     if (message.reference && message.reference.messageId) {
-      if (
-        message.author.id == "869406935357743205" ||
-        "1330373117192700040" ||
-        "810952830235836436"
-      ) {
+      if (message.author.id == "869406935357743205" || "1330373117192700040" || "810952830235836436" || "445174940891611136" || "1041053463708184677") {
         if (message.content.toLowerCase() === "pin") {
-          const repliedTo = await message.channel.messages.fetch(
-            message.reference.messageId
-          );
+          const repliedTo = await message.channel.messages.fetch(message.reference.messageId);
 
           const repliedToUser = repliedTo.author.id;
           const rGuildId = repliedTo.guild.id;
           const rChannelId = repliedTo.channel.id;
           const repliedToMsgId = repliedTo.id;
 
-          const i = repliedTo.attachments.find((attachment) =>
-            attachment.contentType?.startsWith("image/")
-          );
+          const i = repliedTo.attachments.find((attachment) => attachment.contentType?.startsWith("image/"));
 
           const ch = await client.channels.fetch("1384074577411444816");
           if (!ch.isTextBased()) return;
@@ -104,16 +96,9 @@ module.exports = (client) => {
 
     // Message Logging
 
-    console.log(
-      `[${message.channel.name}] ${message.author.tag} ==> ${message.content}`
-    );
-    const messageLogger = fs.createWriteStream(
-      "src/loggers/The-Boys/BoysMessageSent.txt",
-      { flags: "a" }
-    );
-    messageLogger.write(
-      `[${message.channel.name}] ${message.author.tag} ==> ${message.content}\n`
-    );
+    console.log(`[${message.channel.name}] ${message.author.tag} ==> ${message.content}`);
+    const messageLogger = fs.createWriteStream("src/loggers/The-Boys/BoysMessageSent.txt", { flags: "a" });
+    messageLogger.write(`[${message.channel.name}] ${message.author.tag} ==> ${message.content}\n`);
     messageLogger.end();
 
     // Discord Logs | Message Logging
@@ -126,9 +111,7 @@ module.exports = (client) => {
         value: `**Channel**: \n- https://discord.com/channels/${message.guild.id}/${message.channel.id}/${message.id}\n**Discord Tag**: \n- <@${message.author.id}>\n**Message**: \n- ${message.content}`,
         inline: true
       });
-    client.channels.cache
-      .get("1382447649428602940")
-      .send({ embeds: [MessageLogger] });
+    client.channels.cache.get("1382447649428602940").send({ embeds: [MessageLogger] });
   });
 
   // Message Updated logging
@@ -142,17 +125,10 @@ module.exports = (client) => {
 
     //to be deleted ifs
 
-    console.log(
-      `[${newMessage.channel.name}] ${newMessage.author.tag} ==> ${oldMessage.content} –→ ${newMessage.content}`
-    );
+    console.log(`[${newMessage.channel.name}] ${newMessage.author.tag} ==> ${oldMessage.content} –→ ${newMessage.content}`);
     if (newMessage.guild.id === "1342817423140851746") {
-      const messageLogger = fs.createWriteStream(
-        "src/loggers/The-Boys/BoysMessageUpdated.txt",
-        { flags: "a" }
-      );
-      messageLogger.write(
-        `[${newMessage.channel.name}] ${newMessage.author.tag} ==> ${oldMessage.content} –→ ${newMessage.content}\n`
-      );
+      const messageLogger = fs.createWriteStream("src/loggers/The-Boys/BoysMessageUpdated.txt", { flags: "a" });
+      messageLogger.write(`[${newMessage.channel.name}] ${newMessage.author.tag} ==> ${oldMessage.content} –→ ${newMessage.content}\n`);
       messageLogger.end();
     }
 
@@ -166,9 +142,7 @@ module.exports = (client) => {
         value: `**Channel**: \n- https://discord.com/channels/${oldMessage.guild.id}/${oldMessage.channel.id}/${oldMessage.id}\n**Discord Tag**: \n- <@${oldMessage.author.tag}>\n**Old Contents**: \n- ${oldMessage.content}\n**New Content**: \n- ${newMessage.content}`,
         inline: true
       });
-    client.channels.cache
-      .get("1382447649428602940")
-      .send({ embeds: [MessageLogger] });
+    client.channels.cache.get("1382447649428602940").send({ embeds: [MessageLogger] });
 
     // Channel embed for mason
 
@@ -198,17 +172,10 @@ module.exports = (client) => {
 
     //File Message deleted logging
 
-    console.log(
-      `[${message.channel.name}] ${message.author.tag} ==> ${message.content}`
-    );
+    console.log(`[${message.channel.name}] ${message.author.tag} ==> ${message.content}`);
     if (message.guild.id === "1342817423140851746") {
-      const messageLogger = fs.createWriteStream(
-        "src/loggers/The-Boys/BoysMessageDeleted.txt",
-        { flags: "a" }
-      );
-      messageLogger.write(
-        `[${message.channel.name}] ${message.author.tag} ==> ${message.content}\n`
-      );
+      const messageLogger = fs.createWriteStream("src/loggers/The-Boys/BoysMessageDeleted.txt", { flags: "a" });
+      messageLogger.write(`[${message.channel.name}] ${message.author.tag} ==> ${message.content}\n`);
       messageLogger.end();
     }
 
@@ -222,9 +189,7 @@ module.exports = (client) => {
         value: `**Channel**: \n‖ https://discord.com/channels/${message.guild.id}/${message.channel.id}/${message.id}\n**Discord Tag**: \n‖ ${message.author.tag}\n**Contents**: \n‖ ${message.content}`,
         inline: true
       });
-    client.channels.cache
-      .get("1382447649428602940")
-      .send({ embeds: [MessageLogger] });
+    client.channels.cache.get("1382447649428602940").send({ embeds: [MessageLogger] });
 
     //Send Embed in channel of a deleted Message
 
@@ -255,16 +220,12 @@ module.exports = (client) => {
         inline: false
       });
     if (!oldStatus && newStatus) {
-      client.channels.cache
-        .get("1342817423719534636")
-        .send({ embeds: [Boosted] });
+      client.channels.cache.get("1342817423719534636").send({ embeds: [Boosted] });
       console.log(`${newMember.user.tag} just boosted the server`);
       return;
     }
     if (oldStatus && !newStatus) {
-      client.channels.cache
-        .get("1342817423719534636")
-        .send({ embeds: [Boosted] });
+      client.channels.cache.get("1342817423719534636").send({ embeds: [Boosted] });
       console.log(`${newMember.user.tag} stopped boosting the server`);
       return;
     }
