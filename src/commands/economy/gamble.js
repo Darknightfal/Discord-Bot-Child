@@ -1,8 +1,4 @@
-const {
-  Client,
-  ApplicationCommandOptionType,
-  EmbedBuilder
-} = require("discord.js");
+const { Client, ApplicationCommandOptionType, EmbedBuilder } = require("discord.js");
 const Level = require("../../models/Level");
 const calculateLevelXp = require("../../utils/calculateLevelXp");
 
@@ -79,28 +75,14 @@ module.exports = {
     };
 
     try {
-      if (
-        !interaction.options.get("easy")?.value &&
-        !interaction.options.get("normal")?.value &&
-        !interaction.options.get("hard")?.value &&
-        !interaction.options.get("extreme")?.value &&
-        !interaction.options.get("impossible")?.value
-      ) {
+      if (!interaction.options.get("easy")?.value && !interaction.options.get("normal")?.value && !interaction.options.get("hard")?.value && !interaction.options.get("extreme")?.value && !interaction.options.get("impossible")?.value) {
         await interaction.deferReply({ ephemeral: true });
         await interaction.editReply("Please Select a difficulty");
         return;
       }
 
-      if (
-        easyNum === interaction.options.get("easy")?.value ||
-        normalNum === interaction.options.get("normal")?.value ||
-        hardNum === interaction.options.get("hard")?.value ||
-        extNum === interaction.options.get("expert")?.value ||
-        impNum === interaction.options.get("impossible")?.value
-      ) {
-        const gbl = new EmbedBuilder()
-          .setTitle("✅ Correct")
-          .setColor("Random");
+      if (easyNum === interaction.options.get("easy")?.value || normalNum === interaction.options.get("normal")?.value || hardNum === interaction.options.get("hard")?.value || extNum === interaction.options.get("expert")?.value || impNum === interaction.options.get("impossible")?.value) {
+        const gbl = new EmbedBuilder().setTitle("✅ Correct").setColor("Random");
         if (easyNum === interaction.options.get("easy")?.value) {
           gbl.addFields({
             name: ` `,
@@ -127,7 +109,7 @@ module.exports = {
             value: `You got the number correct! it was ${impNum} and you gained ${impXp} xp`
           });
         }
-        interaction.channel.send({ embeds: [gbl] });
+        interaction.reply({ embeds: [gbl] });
 
         const level = await Level.findOne(query);
         if (level) {
@@ -148,11 +130,7 @@ module.exports = {
             level.level += 1;
 
             if (interaction.guild.id === "1342817423140851746") {
-              client.channels.cache
-                .get("1366193038220857454")
-                .send(
-                  `${interaction.member} has leveled up to **level ${level.level}** `
-                );
+              client.channels.cache.get("1366193038220857454").send(`${interaction.member} has leveled up to **level ${level.level}** `);
 
               const embed = new EmbedBuilder()
                 .setTitle(` `)
@@ -162,9 +140,7 @@ module.exports = {
                   value: `${interaction.member} has leveled up to **level ${level.level}**`,
                   inline: true
                 });
-              client.channels.cache
-                .get("1366193038220857454")
-                .send({ embeds: [embed] });
+              client.channels.cache.get("1366193038220857454").send({ embeds: [embed] });
             }
           }
           await level.save().catch((e) => {
@@ -173,44 +149,32 @@ module.exports = {
           });
         }
       } else {
-        const fail = new EmbedBuilder()
-          .setTitle("❎ Incorrect")
-          .setColor("Random");
+        const fail = new EmbedBuilder().setTitle("❎ Incorrect").setColor("Random");
 
         if (interaction.options.get("easy")?.value) {
           fail.addFields({
             name: ` `,
-            value: `You guessed ${
-              interaction.options.get("easy")?.value
-            }. the answer was was ${easyNum}`
+            value: `You guessed ${interaction.options.get("easy")?.value}. the answer was was ${easyNum}`
           });
         } else if (interaction.options.get("normal")?.value) {
           fail.addFields({
             name: ` `,
-            value: `You guessed ${
-              interaction.options.get("normal")?.value
-            }. the answer was was ${normalNum}`
+            value: `You guessed ${interaction.options.get("normal")?.value}. the answer was was ${normalNum}`
           });
         } else if (interaction.options.get("hard")?.value) {
           fail.addFields({
             name: ` `,
-            value: `You guessed ${
-              interaction.options.get("hard")?.value
-            }. the answer was was ${hardNum}`
+            value: `You guessed ${interaction.options.get("hard")?.value}. the answer was was ${hardNum}`
           });
-        } else if (interaction.options.get("expert")?.value) {
+        } else if (interaction.options.get("extreme")?.value) {
           fail.addFields({
             name: ` `,
-            value: `You guessed ${
-              interaction.options.get("extreme")?.value
-            }. the answer was was ${extNum}`
+            value: `You guessed ${interaction.options.get("extreme")?.value}. the answer was was ${extNum}`
           });
         } else if (interaction.options.get("impossible")?.value) {
           fail.addFields({
             name: ` `,
-            value: `You guessed ${
-              interaction.options.get("impossible")?.value
-            }. the answer was was ${impNum}`
+            value: `You guessed ${interaction.options.get("impossible")?.value}. the answer was was ${impNum}`
           });
         }
 
