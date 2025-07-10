@@ -103,6 +103,10 @@ module.exports = (client) => {
 
     // Discord Logs | Message Logging
 
+    //to be deleted ifs
+
+    if (message.channe.id === "1392459923555618896" || "1392460011988586619" || "1392459617702908044") return;
+
     const MessageLogger = new EmbedBuilder()
       .setTitle(`Message Sent`)
       .setColor("DarkRed")
@@ -134,6 +138,10 @@ module.exports = (client) => {
 
     // Discord Logs | Message Updated Logging
 
+    //to be deleted ifs
+
+    if (message.channe.id === "1392459923555618896" || "1392460011988586619" || "1392459617702908044") return;
+
     const MessageLogger = new EmbedBuilder()
       .setTitle(`Message Updated`)
       .setColor("DarkRed")
@@ -143,20 +151,6 @@ module.exports = (client) => {
         inline: true
       });
     client.channels.cache.get("1382447649428602940").send({ embeds: [MessageLogger] });
-
-    // Channel embed for mason
-
-    if (oldMessage.author.id === "1254396155782107218") {
-      const messagLog = new EmbedBuilder()
-        .setTitle(`Message Updated`)
-        .setColor("DarkRed")
-        .addFields({
-          name: ` `,
-          value: `**Discord Tag**: \n- ${oldMessage.author.tag}\n**Old Contents**: \n- ${oldMessage.content}`,
-          inline: true
-        });
-      oldMessage.reply({ embeds: [messagLog] });
-    }
   });
 
   // Message Deleted Logging
@@ -180,6 +174,10 @@ module.exports = (client) => {
     }
 
     // Discord Logs | Message Deleted Logging
+
+    //to be deleted ifs
+
+    if (message.channe.id === "1392459923555618896" || "1392460011988586619" || "1392459617702908044") return;
 
     const MessageLogger = new EmbedBuilder()
       .setTitle(`Message Deleted`)
