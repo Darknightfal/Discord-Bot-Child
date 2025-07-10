@@ -105,7 +105,7 @@ module.exports = (client) => {
 
     //to be deleted ifs
 
-    if (message.channe.id === "1392459923555618896" || "1392460011988586619" || "1392459617702908044") return;
+    if (message.channel.id === "1392459923555618896" || "1392460011988586619" || "1392459617702908044") return;
 
     const MessageLogger = new EmbedBuilder()
       .setTitle(`Message Sent`)
@@ -140,7 +140,7 @@ module.exports = (client) => {
 
     //to be deleted ifs
 
-    if (message.channe.id === "1392459923555618896" || "1392460011988586619" || "1392459617702908044") return;
+    if (message.channel.id === "1392459923555618896" || "1392460011988586619" || "1392459617702908044") return;
 
     const MessageLogger = new EmbedBuilder()
       .setTitle(`Message Updated`)
@@ -177,7 +177,7 @@ module.exports = (client) => {
 
     //to be deleted ifs
 
-    if (message.channe.id === "1392459923555618896" || "1392460011988586619" || "1392459617702908044") return;
+    if (message.channel.id === "1392459923555618896" || "1392460011988586619" || "1392459617702908044") return;
 
     const MessageLogger = new EmbedBuilder()
       .setTitle(`Message Deleted`)
